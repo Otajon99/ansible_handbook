@@ -1,1 +1,21 @@
-sdf
+---
+- name: Install ntp
+  hosts: ntp
+  become: yes
+  vars:
+    ap: "chrony"
+  tasks:
+
+    - name: connection
+      ping:
+      register: give_me_answer
+      ignore_errors: yes
+
+    - name: Debugging
+      debug:
+        var: give_me_answer.changed
+
+    - name: installing ntp
+      yum:
+        name: "{{ ap }}"
+        state: latest
